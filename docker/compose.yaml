@@ -1,0 +1,38 @@
+---
+services:
+  digeiz-postgres:
+    image: postgres:16.2
+    container_name: digeiz-postgres
+    ports:
+      - "5450:5432"
+    environment:
+      POSTGRES_USER: digeiz
+      POSTGRES_PASSWORD: digeiz
+      POSTGRES_DB: digeiz
+    volumes:
+      - pgdata_digeiz:/var/lib/postgresql/data
+
+  digeiz-service:
+    container_name: digeiz-service
+    platform: linux/x86_64
+    restart: always
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    command: bash -c "alembic upgrade head && flask --app 'drivers.rest.main:create_app()' run -h 0.0.0.0 --debug"
+    volumes:
+      - ../src:/home/digeiz-user/src
+    ports:
+      - 5001:5000
+    environment:
+      - API_ENVIRONMENT=local
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:5000/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - digeiz-postgres
+
+volumes:
+  pgdata_digeiz:

@@ -1,0 +1,3282 @@
+{
+	"info": {
+		"_postman_id": "4ae29d94-9795-40a1-b03a-9cd8df71bb16",
+		"name": "Digeiz Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22947533"
+	},
+	"item": [
+		{
+			"name": "/api/malls",
+			"item": [
+				{
+					"name": "/api/malls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"id\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"id\",",
+									"        \"name\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Mall\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/malls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.hello[0]).to.a(\"string\").equals(\"Unknown field.\");",
+									"    pm.expect(errors.name[0]).to.a(\"string\").equals(\"Length must be between 3 and 60.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hello\": \"World\",\n    \"name\": \"Ol\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/malls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"items\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\",",
+									"                \"properties\": {",
+									"                    \"id\": {",
+									"                        \"type\": \"number\",",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\",",
+									"                    },",
+									"                },    ",
+									"                \"required\": [",
+									"                    \"id\",",
+									"                    \"name\"",
+									"                ],",
+									"            }",
+									"        },",
+									"        \"total_count\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"items\",",
+									"        \"total_count\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.limit[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"    pm.expect(errors.page[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls?limit=sd&page=kjsf",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "sd"
+								},
+								{
+									"key": "page",
+									"value": "kjsf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"id\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"id\",",
+									"        \"name\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Mall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.mall_id[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls/kahdf;hj",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"kahdf;hj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Mall Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/malls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.hello[0]).to.a(\"string\").equals(\"Unknown field.\");",
+									"    pm.expect(errors.name[0]).to.a(\"string\").equals(\"Length must be between 3 and 60.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hello\": \"World\",\n    \"name\": \"Ol\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/malls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Mall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Mall Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/malls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/malls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Mall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/malls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"malls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/walls",
+			"item": [
+				{
+					"name": "/api/walls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"id\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"        \"mall\": {",
+									"            \"type\": \"object\",",
+									"            \"properties\": {",
+									"                \"id\": {",
+									"                    \"type\": \"number\"",
+									"                },",
+									"                \"name\": {",
+									"                    \"type\": \"string\"",
+									"                }",
+									"            }",
+									"        }",
+									"    },    ",
+									"    \"required\": [",
+									"        \"id\",",
+									"        \"name\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Wall\",\n    \"mall_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/walls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.mall_id[0]).to.a(\"string\").equals(\"Missing data for required field.\");",
+									"    pm.expect(errors.name[0]).to.a(\"string\").equals(\"Length must be between 3 and 60.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ne\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/walls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"items\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\",",
+									"                \"properties\": {",
+									"                    \"id\": {",
+									"                        \"type\": \"number\",",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\",",
+									"                    },",
+									"                    \"mall\": {",
+									"                        \"type\": \"object\",",
+									"                        \"properties\": {",
+									"                            \"id\": {",
+									"                                \"type\": \"number\",",
+									"                            },",
+									"                            \"name\": {",
+									"                                \"type\": \"string\"",
+									"                            }",
+									"                        }",
+									"                    }",
+									"                },    ",
+									"                \"required\": [",
+									"                    \"id\",",
+									"                    \"name\",",
+									"                    \"mall\"",
+									"                ],",
+									"            }",
+									"        },",
+									"        \"total_count\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"items\",",
+									"        \"total_count\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls?mall_id_filter=2&page=1&limit=3",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls"
+							],
+							"query": [
+								{
+									"key": "mall_id_filter",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.limit[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"    pm.expect(errors.page[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"    pm.expect(errors.mall_id_filter[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls?limit=sd&page=kjsf&mall_id_filter=jadkf",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "sd"
+								},
+								{
+									"key": "page",
+									"value": "kjsf"
+								},
+								{
+									"key": "mall_id_filter",
+									"value": "jadkf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"id\": {",
+									"            \"type\": \"integer\",",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"        \"mall\": {",
+									"            \"type\": \"object\",",
+									"            \"properties\": {",
+									"                \"id\": {",
+									"                    \"type\": \"integer\"",
+									"                },",
+									"                \"name\": {",
+									"                    \"type\": \"string\"",
+									"                }",
+									"            }",
+									"        }",
+									"    },    ",
+									"    \"required\": [",
+									"        \"id\",",
+									"        \"name\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Wall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.wall_id[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls/kahdf;hj",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"kahdf;hj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Wall Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/walls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.hello[0]).to.a(\"string\").equals(\"Unknown field.\");",
+									"    pm.expect(errors.name[0]).to.a(\"string\").equals(\"Length must be between 3 and 60.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hello\": \"World\",\n    \"name\": \"Ol\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/walls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Wall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Mall Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/walls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/walls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Mall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/walls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"walls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/footfalls",
+			"item": [
+				{
+					"name": "/api/footfalls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"end_datetime\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"start_datetime\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"people_in\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"people_out\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"id\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"is_active\": {",
+									"                \"type\": \"boolean\"",
+									"            },",
+									"            \"origin\": {",
+									"                \"enum\": [\"raw\", \"reconsturction\"]",
+									"            },",
+									"            \"wall\": {",
+									"                \"type\": \"object\",",
+									"                \"properties\": {",
+									"                    \"id\": {",
+									"                        \"type\": \"number\",",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"wall\": {",
+									"                        \"type\": \"object\",",
+									"                        \"properties\":{",
+									"                            \"id\": {",
+									"                                \"type\": \"number\",",
+									"                            },",
+									"                            \"name\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                        }",
+									"                    }",
+									"                }",
+									"            },",
+									"        },    ",
+									"        \"required\": [",
+									"            \"id\",",
+									"            \"end_datetime\",",
+									"            \"start_datetime\",",
+									"            \"wall\",",
+									"            \"people_in\",",
+									"            \"people_out\",",
+									"            \"is_active\",",
+									"            \"origin\"",
+									"        ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start_datetime\": \"2024-04-05T08:00:00.0+01:00\",\n    \"end_datetime\": \"2024-04-05T09:00:00.0+01:00\",\n    \"people_in\": 200,\n    \"people_out\": 150,\n    \"wall_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.datetime_fields).to.a(\"string\").equals(\"start_datetime must not be later than end_datetime.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start_datetime\": \"2024-04-05T10:00:00.0+01:00\",\n    \"end_datetime\": \"2024-04-05T09:00:00.0+01:00\",\n    \"people_in\": 44,\n    \"people_out\": 0,\n    \"wall_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"items\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\",",
+									"                \"properties\": {",
+									"                    \"end_datetime\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"start_datetime\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"people_in\": {",
+									"                        \"type\": \"number\"",
+									"                    },",
+									"                    \"people_out\": {",
+									"                        \"type\": \"number\"",
+									"                    },",
+									"                    \"id\": {",
+									"                        \"type\": \"number\"",
+									"                    },",
+									"                    \"is_active\": {",
+									"                        \"type\": \"boolean\"",
+									"                    },",
+									"                    \"origin\": {",
+									"                        \"enum\": [\"raw\", \"reconsturction\"]",
+									"                    },",
+									"                    \"wall\": {",
+									"                        \"type\": \"object\",",
+									"                        \"properties\": {",
+									"                            \"id\": {",
+									"                                \"type\": \"number\",",
+									"                            },",
+									"                            \"name\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"wall\": {",
+									"                                \"type\": \"object\",",
+									"                                \"properties\":{",
+									"                                    \"id\": {",
+									"                                        \"type\": \"number\",",
+									"                                    },",
+									"                                    \"name\": {",
+									"                                        \"type\": \"string\"",
+									"                                    },",
+									"                                }",
+									"                            }",
+									"                        }",
+									"                    },",
+									"                    \"id\": {",
+									"                        \"type\": \"number\",",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\",",
+									"                    },",
+									"",
+									"                },    ",
+									"                \"required\": [",
+									"                    \"id\",",
+									"                    \"end_datetime\",",
+									"                    \"start_datetime\",",
+									"                    \"wall\",",
+									"                    \"people_in\",",
+									"                    \"people_out\",",
+									"                    \"is_active\",",
+									"                    \"origin\"",
+									"                ],",
+									"            }",
+									"        },",
+									"        \"total_count\": {",
+									"            \"type\": \"number\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"items\",",
+									"        \"total_count\"",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls?page=1&limit=5&wall_id_filter=2&origin_filter=raw&is_active_filter=true",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "wall_id_filter",
+									"value": "2"
+								},
+								{
+									"key": "origin_filter",
+									"value": "raw"
+								},
+								{
+									"key": "is_active_filter",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.limit[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"    pm.expect(errors.page[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"    pm.expect(errors.is_active_filter[0]).to.a(\"string\").equals(\"Not a valid boolean.\");",
+									"",
+									"    pm.expect(errors.origin_filter[0]).to.a(\"string\").equals(\"Must be one of: raw, reconstruction.\");",
+									"    pm.expect(errors.wall_id_filter[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls?page=df&limit=sdf&wall_id_filter=not_uuid&origin_filter=ds&is_active_filter=skdfh",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "df"
+								},
+								{
+									"key": "limit",
+									"value": "sdf"
+								},
+								{
+									"key": "wall_id_filter",
+									"value": "not_uuid"
+								},
+								{
+									"key": "origin_filter",
+									"value": "ds"
+								},
+								{
+									"key": "is_active_filter",
+									"value": "skdfh"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 200 OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 200 = OK",
+									" */",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"end_datetime\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"start_datetime\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"people_in\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"people_out\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"id\": {",
+									"                \"type\": \"number\"",
+									"            },",
+									"            \"is_active\": {",
+									"                \"type\": \"boolean\"",
+									"            },",
+									"            \"origin\": {",
+									"                \"enum\": [\"raw\", \"reconsturction\"]",
+									"            },",
+									"            \"wall\": {",
+									"                \"type\": \"object\",",
+									"                \"properties\": {",
+									"                    \"id\": {",
+									"                        \"type\": \"number\",",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"wall\": {",
+									"                        \"type\": \"object\",",
+									"                        \"properties\":{",
+									"                            \"id\": {",
+									"                                \"type\": \"number\",",
+									"                            },",
+									"                            \"name\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                        }",
+									"                    }",
+									"                }",
+									"            },",
+									"        },    ",
+									"        \"required\": [",
+									"            \"id\",",
+									"            \"end_datetime\",",
+									"            \"start_datetime\",",
+									"            \"wall\",",
+									"            \"people_in\",",
+									"            \"people_out\",",
+									"            \"is_active\",",
+									"            \"origin\"",
+									"        ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Footfall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.footfall_id[0]).to.a(\"string\").equals(\"Not a valid integer.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/kahdf;hj",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"kahdf;hj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_active\": false,\n    \"origin\": \"reconstruction\",\n    \"people_in\": 8000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 = UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const errors =  jsonData.details[0]",
+									"    pm.expect(errors.people_in[0]).to.a(\"string\").equals(\"Value must not be lower than 0\");",
+									"    pm.expect(errors.is_active[0]).to.a(\"string\").equals(\"Not a valid boolean.\");",
+									"    pm.expect(errors.origin[0]).to.a(\"string\").equals(\"Must be one of: raw, reconstruction.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"array\",",
+									"            \"items\": {",
+									"                \"type\": \"object\"",
+									"            }",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_active\": 6463,\n    \"origin\": \"not\",\n    \"people_in\": -1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Footfall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_active\": false,\n    \"origin\": \"reconstruction\",\n    \"people_in\": 8000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/{item_id} 404 NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 404 = NOT FOUND",
+									" */",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"Footfall not found: id_filter=55\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/55",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/import-data 204 NO CONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 204 = NO CONTENT",
+									" */",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "test_footfalls.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/import-data",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"import-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/footfalls/import-data 422 UNPROCESSABLE ENTITY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/** ",
+									" * Tests for HTTP status code",
+									" * 422 == UNPROCESSABLE ENTITY",
+									" */",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"/**",
+									" * Is the data empty?",
+									" */",
+									"pm.test(\"Test object properties\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.be.empty;",
+									"});",
+									"",
+									"/**",
+									" * Do the keys in the response have :",
+									" * The data type we expect it to?",
+									" * The value we expect it to?",
+									" * The length we expect it to?",
+									" */",
+									"pm.test(\"Type and value tests\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.details).to.a(\"string\").equals(\"The data is not valid.\");",
+									"});",
+									"",
+									"",
+									"/**",
+									" *)jv schema validation - https://ajv.js.org/",
+									" * The following test is designed to guard against schema changes",
+									" * without considering downstream impact. This is the JSON schema",
+									" * for the response coming back from the API",
+									" */",
+									"const schema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\": {",
+									"        \"details\": {",
+									"            \"type\": \"string\",",
+									"        },",
+									"    },    ",
+									"    \"required\": [",
+									"        \"details\",",
+									"    ],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "test_footfalls_not_valid.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/api/footfalls/import-data",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"footfalls",
+								"import-data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/healthcheck",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"/**",
+					" * This generic test checks to see a response time of the API falls between 200ms and 10s",
+					" * Anythng below 10 seconds will pass pm.test(msg, () => true);  We force a passing tests ",
+					" * otherwise Postman/newman will fail the assertion pm.test(\"Response time is less than 10s\" ...)",
+					" * It is an all or nothing type deal. ",
+					" * ",
+					" * We will fail the test if the API call is greater than 10 seconds. This an an arbitrary value",
+					" * and can be changed, HOWEVER, if an API is taking more than 10 seconds another approach is warranted",
+					" */",
+					"pm.test(\"Response time is less than 10s\", function () {",
+					"    let responseTimes = [200, 500, 1000, 1500, 2000, 2500, 5000, 10000];",
+					"    for (let i = 0; i < responseTimes.length; i++){",
+					"        if(pm.response.responseTime < responseTimes[0]) {",
+					"            msg = `Response time was less than ${responseTimes[0]}ms`;",
+					"            console.info(`${msg} - Total: ${pm.response.responseTime}ms`);",
+					"            pm.test(msg, () => true);",
+					"            break;",
+					"        } else if(responseTimes[i] >= pm.response.responseTime) {",
+					"            msg = `Response time was greater than ${responseTimes[i-1]}ms`",
+					"            console.warn(`${msg} - Total: ${pm.response.responseTime}ms`);",
+					"            pm.test(msg, () => true);",
+					"            break;",
+					"        } else if(pm.response.responseTime > responseTimes[responseTimes.length-1]) {",
+					"            msg = `Response time was greater than ${responseTimes[responseTimes.length-1]/1000}s`",
+					"            console.error(`${msg} - Total: ${pm.response.responseTime/1000}s`);",
+					"            pm.test(msg, () => false);",
+					"            break;",
+					"        }",
+					"    }",
+					"});"
+				]
+			}
+		}
+	]
+}
